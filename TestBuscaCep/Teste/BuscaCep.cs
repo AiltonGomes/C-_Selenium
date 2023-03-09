@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace TestBuscaCep.Steps
 {
@@ -19,7 +20,6 @@ namespace TestBuscaCep.Steps
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("https://buscacepinter.correios.com.br/app/endereco/index.php");
-            esperar = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
         [Test]
@@ -29,6 +29,10 @@ namespace TestBuscaCep.Steps
             driver.FindElement(By.Id("endereco")).SendKeys("80700000");
 
             driver.FindElement(By.Id("btn_pesquisar")).Click();
+
+            string titulo = driver.Title;
+
+            Assert.AreEqual(titulo, "Busca CEP");
 
             driver.FindElement(By.XPath("//a[@class='hamburger'][contains(.,'.')]")).Click();
 
@@ -44,7 +48,6 @@ namespace TestBuscaCep.Steps
         public void Cleanup()
         {
             driver.Close();
-            driver.Quit();
         }
     }
 }
