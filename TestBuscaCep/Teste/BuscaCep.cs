@@ -12,7 +12,6 @@ namespace TestBuscaCep.Steps
     public class BuscaCep
     {
         WebDriver driver;
-        WebDriverWait esperar;
 
         [SetUp]
         public void Inicializa()
@@ -29,11 +28,7 @@ namespace TestBuscaCep.Steps
             driver.FindElement(By.Id("endereco")).SendKeys("80700000");
 
             driver.FindElement(By.Id("btn_pesquisar")).Click();
-
-            string titulo = driver.Title;
-
-            Assert.AreEqual(titulo, "Busca CEP");
-
+            
             driver.FindElement(By.XPath("//a[@class='hamburger'][contains(.,'.')]")).Click();
 
             driver.FindElement(By.XPath("//a[contains(.,'Por Endereço ou CEP')]")).Click();            
@@ -41,6 +36,12 @@ namespace TestBuscaCep.Steps
             driver.FindElement(By.Id("endereco")).SendKeys("01013001");
 
             driver.FindElement(By.Id("btn_pesquisar")).Click();
+
+            string textoObtido = driver.FindElement(By.XPath("//td[contains(@data-th,'Logradouro/Nome')]")).Text;
+
+            string textoEsperado = "Rua Quinze de Novembro - lado ímpar";
+
+            Assert.AreEqual(textoEsperado, textoObtido);
 
         }
         
