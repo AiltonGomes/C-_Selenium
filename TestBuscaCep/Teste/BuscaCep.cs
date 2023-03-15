@@ -28,6 +28,12 @@ namespace TestBuscaCep.Steps
             driver.FindElement(By.Id("endereco")).SendKeys("80700000");
 
             driver.FindElement(By.Id("btn_pesquisar")).Click();
+           
+            string msgCepInexistente = driver.FindElement(By.Id("mensagem-resultado-alerta")).Text;
+
+            string msgCepInexistenteEsperado = "Dados não encontrado";
+
+            Assert.AreEqual(msgCepInexistente, msgCepInexistenteEsperado);
             
             driver.FindElement(By.XPath("//a[@class='hamburger'][contains(.,'.')]")).Click();
 
@@ -37,11 +43,11 @@ namespace TestBuscaCep.Steps
 
             driver.FindElement(By.Id("btn_pesquisar")).Click();
 
-            string textoObtido = driver.FindElement(By.XPath("//td[contains(@data-th,'Logradouro/Nome')]")).Text;
+            string msgCepExistente = driver.FindElement(By.XPath("//td[contains(@data-th,'Logradouro/Nome')]")).Text;
 
-            string textoEsperado = "Rua Quinze de Novembro - lado ímpar";
+            string msgCepExistenteEsperado = "Rua Quinze de Novembro - lado ímpar";
 
-            Assert.AreEqual(textoEsperado, textoObtido);
+            Assert.AreEqual(msgCepExistenteEsperado, msgCepExistente);
 
         }
         
